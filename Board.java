@@ -20,11 +20,10 @@ public class Board {
    
     public boolean checkForWinner (char marker) {
         boolean isAWinner = false;
-        int consecutive;
+        int consecutive   = 0;
         int col;
         int row;
-       
-        consecutive = 0;
+
         for (row = 0; row < 3 && consecutive != 3; row++) {
             consecutive = 0;
 
@@ -38,13 +37,13 @@ public class Board {
 
         if (consecutive == 3) {
             isAWinner = true;
-        }
-
-        if (!isAWinner) {
+        } else {
 
             if (gameBoard[1][1] == marker) {
+
                 for (row = 0; row < 3; row += 2) {
                     if (gameBoard[row][0] == marker) {
+
                         if (row == 0 && gameBoard[2][2] == marker) {
                             isAWinner = true;
                             break;
@@ -52,6 +51,7 @@ public class Board {
                             isAWinner = true;
                             break;
                         }
+
                     }
                 }
 
@@ -60,6 +60,7 @@ public class Board {
                         consecutive = 0;
 
                         for (row = 0; row < 3; row ++) {
+
                             if (gameBoard[row][col] == marker) {
                                 consecutive++;
                             }
@@ -79,25 +80,21 @@ public class Board {
     
     public void computerMove(char marker, char humanMarker) {
 
-        boolean canComputerWin = false;
-        boolean canHumanWin = false;
+        boolean canComputerWin  = false;
+        boolean canHumanWin     = false;
         Board copyBoard;
         int row;
         int col;
-        int tryRow;
-        int tryCol;
-        row = 0;
-        col = 0;
-        int[] humanWin = checkForWin(humanMarker);
-        int[] computerWin = checkForWin(marker);
+        int tryRow              = 0;
+        int tryCol              = 0;
+        int[] humanWin          = checkForWin(humanMarker);
+        int[] computerWin       = checkForWin(marker);
 
         if (computerWin[0] > 0) {
             System.out.println("Potential win detected at " + computerWin[0] + "x" + computerWin[1] + ". Going for gold!");
-            System.out.println(Arrays.toString(computerWin));
             gameBoard[computerWin[0]-1][computerWin[1]-1] = marker;
         } else if (humanWin[0] > 0) {
             System.out.println("Potential win detected at " + humanWin[0] + "x" + humanWin[1] + ". Initiating Block!");
-            System.out.println(Arrays.toString(humanWin));
             gameBoard[humanWin[0]-1][humanWin[1]-1] = marker;
         } else {
             System.out.println("No wins detected. Randomizing spot...");
@@ -110,24 +107,22 @@ public class Board {
                 tryCol = rand.nextInt(3);
 
                 if (gameBoard[tryRow][tryCol] == ' ') {
-
                     gameBoard[tryRow][tryCol] = marker;
                     placed = true;
                 }
 
             } while(!placed);
-          
         }
-      
     }
 
     private int[] checkForWin(char marker) {
-      boolean canWin = false;
       Board copyBoard;
+
+      boolean canWin    = false;
       int row;
       int col;
-      row = 0;
-      col = 0;
+      row               = 0;
+      col               = 0;
       int[] winPosition = new int[2];
       
 
@@ -138,6 +133,7 @@ public class Board {
                   copyBoard           = copyTheBoard();
                   copyBoard.makeMove(row, col, marker);
                   canWin              = copyBoard.checkForWinner(marker);
+
                   if (canWin) {
                     System.out.println("Win Detected at " + row + "x" + col);
                     winPosition[0] = row+1;
@@ -147,17 +143,16 @@ public class Board {
           }
       }
 
-      if (canWin) {
-
-      } else {
+      if (!canWin) {
 
           for (col = 0; col < 3 && !canWin; col++) {
               for (row = 0; row < 3 && !canWin; row++) {
 
                   if (gameBoard[row][col] == ' ') {
-                      copyBoard           = copyTheBoard( );
+                      copyBoard           = copyTheBoard();
                       copyBoard.makeMove(row, col, marker);
                       canWin              = copyBoard.checkForWinner(marker);
+
                       if (canWin) {
                           System.out.println("Win Detected at " + row + "x" + col);
                           winPosition[0] = row+1;
@@ -175,10 +170,10 @@ public class Board {
 
     public boolean humanMoveOK(int row, int col) {
         if (row > 0 && row <= 3 && col > 0 && col <= 3 && gameBoard[row-1][col-1] == ' ') {
-          return true;
+            return true;
         } else {
-          System.out.print("Invalid selection. Try again. \n");
-          return false;
+            System.out.print("Invalid selection. Try again. \n");
+            return false;
         }
     }
     
@@ -187,8 +182,8 @@ public class Board {
     }
             
     private Board copyTheBoard() {
-      Board temp;
-      temp = new Board();
+        Board temp;
+        temp = new Board();
 
         for (int row = 0; row < 3; row++) {
           for (int col = 0; col < 3; col++) {
@@ -199,28 +194,11 @@ public class Board {
         return temp;
     }
      
-    public boolean humanMove(int row, int col, char marker) {
-        boolean placed;
-
-        if (row > 3 || col > 3) {
-            System.out.println("Invalid number"); 
-            placed = false;
-
-        } else if (gameBoard[row-1][col-1] == ' ') {
-                gameBoard[row-1][col-1] = marker;
-                placed = true;
-
-        } else {
-            placed = false;
-        }
-
-        return placed;
-    }     
-     
     public String toString( ) {
         String result = "";
         int row;
         int col;
+
         result += "    1  2   3\n";
 
         for(row = 0; row < 3; row++) {
@@ -229,9 +207,8 @@ public class Board {
             for (col = 0; col < 3; col++) {
                 result += "  " + gameBoard[row][col] + " ";
             }
-          
-
         }
+
         return result;
     }     
 }
