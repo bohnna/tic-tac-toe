@@ -108,15 +108,11 @@ public class Board {
             do {
                 tryRow = rand.nextInt(3);
                 tryCol = rand.nextInt(3);
-                int pickedRow = tryRow + 1;
-                int pickedCol = tryCol + 1;
-                // System.out.println("Not placed, Trying " + pickedRow + "x" + pickedCol);
 
                 if (gameBoard[tryRow][tryCol] == ' ') {
 
                     gameBoard[tryRow][tryCol] = marker;
                     placed = true;
-                    // System.out.println("Placed");
                 }
 
             } while(!placed);
