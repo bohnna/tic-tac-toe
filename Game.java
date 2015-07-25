@@ -85,8 +85,8 @@ public class Game
 
                 if (winner) {
                     winMarker = humanMarker;
-                } else if (turns >= 10) {
-                    System.out.println("TIE! TRY AGAIN DAWGS");
+                } else if (turns >= 9) {
+                    System.out.println("Cat. I'll get you next time.....");
                     System.exit(0);
                 }
             }
